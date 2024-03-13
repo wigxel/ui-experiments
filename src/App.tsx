@@ -7,6 +7,7 @@ import { cn } from "./@/lib/utils";
 
 export function App() {
   const [state, setState] = React.useState(false);
+  const [activeItem, setActiveItem] = React.useState(3);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -27,7 +28,7 @@ export function App() {
           <div className="horizontal-line bottom-0 left-0" />
         </div>
         <div className="section flex flex-1 flex-col">
-          <NavSection />
+          <NavSection setActiveItem={setActiveItem} activeItem={activeItem} />
         </div>
         <div className="section relative h-[10vh] overflow-hidden">
           <p>CREATING A SUSTAINABLE FUTURE</p>
@@ -58,7 +59,9 @@ export function App() {
           <div className="horizontal-line bottom-0 left-0" />
           #6
         </div>
-        <div className="section flex-1">$7</div>
+        <div className="section flex flex-1 flex-col">
+          <ContactUs currentIndex={activeItem + 1} />
+        </div>
       </div>
     </div>
   );
@@ -70,9 +73,7 @@ const router = createRouter({
   defaultPreload: "intent",
 });
 
-function NavSection() {
-  const [activeItem, setActiveItem] = React.useState(3);
-
+function NavSection({ setActiveItem, activeItem }) {
   return (
     <ul
       className="active nav-section flex flex-1 flex-col items-start justify-around"
@@ -100,5 +101,55 @@ function NavSection() {
         }
       )}
     </ul>
+  );
+}
+
+function ContactUs({ currentIndex = 0 }) {
+  const [first, second] = ("0" + currentIndex).split("");
+
+  return (
+    <div className="flex flex-1 flex-col items-end justify-between">
+      <div className="text-xs tracking-widest underline opacity-80">
+        CONTACT US
+      </div>
+
+      <div className="flex flex-col gap-6">
+        <span className="flex -space-x-8 text-right text-[132px] leading-[1]">
+          <Counter value={first} />
+          <Counter value={second} />
+        </span>
+        <ul className="*:underline *:text-xs *:font-semibold *:tracking-widest flex justify-end gap-8">
+          <li>LINKEDIN</li>
+          <li>WECHAT</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function Counter(props) {
+  const count = Number(props.value);
+
+  return (
+    <div className="aspect-square h-[120px] overflow-hidden">
+      <span
+        className="inline-flex transform flex-col"
+        style={{
+          "--count": count,
+          transform: `translateY(calc(var(--count, 0) * -120px))`,
+          transition: "transform .3s ease-in",
+        }}
+      >
+        {Array(10)
+          .fill(0)
+          .map((_, index) => {
+            return (
+              <span key={index} className="relative h-[120px]">
+                {index}
+              </span>
+            );
+          })}
+      </span>
+    </div>
   );
 }
