@@ -13,7 +13,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        body: ["AeonikTrail", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

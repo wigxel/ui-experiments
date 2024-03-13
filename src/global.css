@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Neue Machina";
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -83,6 +79,7 @@ body {
 :root {
   --line-color: #333333;
   --debug: 1;
+  --font-body: "PP Object Sans";
 }
 
 .section {
@@ -104,4 +101,22 @@ body {
   position: absolute;
   background-color: var(--line-color);
   transition: height var(--duration, 2s) ease-out var(--delay, 0s);
+}
+
+.serial-no {
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+
+.reveal span {
+  top: 100%;
+  transition: top 0.8s ease-out;
+}
+
+.active .reveal span {
+  top: 0%;
+}
+
+.active .serial-no {
+  opacity: 1;
 }

@@ -24,10 +24,11 @@ export function App() {
           <a>REFIRE</a>
           <div className="horizontal-line bottom-0 left-0" />
         </div>
-        <div className="section flex-1">#2</div>
+        <div className="section flex flex-1 flex-col">
+          <NavSection />
+        </div>
         <div className="section relative h-[10vh] overflow-hidden">
           <div className="horizontal-line left-0 top-0" />
-          #3
         </div>
       </div>
       <div className="relative flex basis-[35%] flex-col">
@@ -65,3 +66,22 @@ const router = createRouter({
   globalNotFound: () => <div>Page not found</div>,
   defaultPreload: "intent",
 });
+
+function NavSection() {
+  return (
+    <ul className="nav-section flex flex-1 flex-col justify-around">
+      {["Markets", "Products", "About", "Partners", "Stories"].map(
+        (e, index) => {
+          return (
+            <li key={e} className="flex gap-2 text-[10vh]">
+              <span className="serial-no text-[0.2em]">0{index + 1}</span>
+              <span className="reveal overflow-hidden text-[1em] leading-[0.9] tracking-tighter ">
+                <span className="relative">{e}</span>
+              </span>
+            </li>
+          );
+        }
+      )}
+    </ul>
+  );
+}
