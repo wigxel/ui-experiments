@@ -120,3 +120,25 @@
 .active .serial-no {
   opacity: 1;
 }
+
+.nav-item {
+  cursor: default;
+}
+
+.nav-item .blur-layer {
+  @apply absolute inset-0;
+  transition: backdrop-filter 0.5s ease-out;
+}
+
+.nav-item .text-content {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.nav-item.inactive .blur-layer {
+  @apply backdrop-blur-[5px];
+}
+
+.nav-item.inactive .text-content {
+  opacity: 0.2;
+}

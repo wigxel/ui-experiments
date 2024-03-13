@@ -1,7 +1,9 @@
 import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { throttle } from "lodash";
 import { routeTree } from "~/routeTree.gen";
 import { QueryProvider } from "./contexts/react-query";
 import React from "react";
+import { cn } from "./@/lib/utils";
 
 export function App() {
   const [state, setState] = React.useState(false);
@@ -28,6 +30,7 @@ export function App() {
           <NavSection />
         </div>
         <div className="section relative h-[10vh] overflow-hidden">
+          <p>CREATING A SUSTAINABLE FUTURE</p>
           <div className="horizontal-line left-0 top-0" />
         </div>
       </div>
@@ -68,16 +71,30 @@ const router = createRouter({
 });
 
 function NavSection() {
+  const [activeItem, setActiveItem] = React.useState(3);
+
   return (
-    <ul className="nav-section flex flex-1 flex-col justify-around">
+    <ul
+      className="active nav-section flex flex-1 flex-col items-start justify-around"
+      onMouseLeave={() => setActiveItem(null)}
+    >
       {["Markets", "Products", "About", "Partners", "Stories"].map(
         (e, index) => {
           return (
-            <li key={e} className="flex gap-2 text-[10vh]">
+            <li
+              key={e}
+              className={cn("nav-item relative flex gap-2 text-[10vh]", {
+                inactive: activeItem !== null ? index !== activeItem : false,
+              })}
+              onMouseEnter={() => {
+                setActiveItem(index);
+              }}
+            >
               <span className="serial-no text-[0.2em]">0{index + 1}</span>
-              <span className="reveal overflow-hidden text-[1em] leading-[0.9] tracking-tighter ">
+              <span className="reveal text-content overflow-hidden text-[1em] leading-[0.9] tracking-tighter ">
                 <span className="relative">{e}</span>
               </span>
+              <div className="blur-layer" />
             </li>
           );
         }
