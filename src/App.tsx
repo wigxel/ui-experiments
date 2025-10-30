@@ -2,7 +2,7 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { throttle } from "lodash";
 import { routeTree } from "~/routeTree.gen";
 import { QueryProvider } from "./contexts/react-query";
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "./@/lib/utils";
 
 export function App() {
@@ -57,7 +57,7 @@ export function App() {
         </div>
         <div className="section relative h-[20vh]">
           <div className="horizontal-line bottom-0 left-0" />
-          #6
+          <CursorMovement />
         </div>
         <div className="section flex flex-1 flex-col">
           <ContactUs currentIndex={activeItem + 1} />
@@ -118,7 +118,7 @@ function ContactUs({ currentIndex = 0 }) {
           <Counter value={first} />
           <Counter value={second} />
         </span>
-        <ul className="*:underline *:text-xs *:font-semibold *:tracking-widest flex justify-end gap-8">
+        <ul className="flex justify-end gap-8 *:text-xs *:font-semibold *:tracking-widest *:underline">
           <li>LINKEDIN</li>
           <li>WECHAT</li>
         </ul>
@@ -151,5 +151,23 @@ function Counter(props) {
           })}
       </span>
     </div>
+  );
+}
+
+function CursorMovement() {
+  React.useEffect(() => {
+    window.addEventListener("mousemove", (event) => {
+      console.log(event);
+      setCursorMovement({ x: event.clientX, y: event.clientY });
+    });
+  }, []);
+
+  const [getter, setCursorMovement] = React.useState({ x: 0, y: 0 });
+
+  return (
+    <>
+      <h2>x:{getter.x}</h2>
+      <h2>y:{getter.y}</h2>
+    </>
   );
 }
